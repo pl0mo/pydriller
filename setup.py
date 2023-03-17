@@ -1,62 +1,46 @@
-from os import path
-from setuptools import setup, find_packages
+# -*- coding: utf-8 -*-
+from pathlib import Path
 
-with open('requirements.txt') as reqs_file:
-    requirements = reqs_file.read().splitlines()
+from setuptools import find_packages, setup
 
-with open('test-requirements.txt') as reqs_file:
-    test_requirements = reqs_file.read().splitlines()
+from pydriller import __doc__, __version__
 
-# Get the long description from the relevant file
-long_description = 'PyDriller is a Python framework that helps developers on ' \
-                   'mining software repositories. With PyDriller' \
-                   ' you can easily extract information from any Git ' \
-                   'repository, such as commits, developers, ' \
-                   'modifications, diffs, and source codes, and ' \
-                   'quickly export CSV files.'
-
-
-def get_version():
-    with open(path.join(path.dirname(__file__), 'pydriller', '__init__.py')) as f:
-        for line in f:
-            if line.startswith('__version__'):
-                delim = '"' if '"' in line else "'"
-                return line.split(delim)[1]
-        raise RuntimeError("Unable to find version string.")
-
+requirements = Path('requirements.txt').read_text().splitlines()
+test_requirements = Path('test-requirements.txt').read_text().splitlines()
 
 setup(
     name='PyDriller',
     description='Framework for MSR',
-    long_description=long_description,
+    long_description=__doc__,
     author='Davide Spadini',
+    other_authors=['Daniel Umpierrez'],
     author_email='spadini.davide@gmail.com',
-    version=get_version(),
+    version=__version__,
     packages=find_packages('.', exclude=['tests*']),
     url='https://github.com/ishepard/pydriller',
     license='Apache License',
     package_dir={'pydriller': 'pydriller'},
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     install_requires=requirements,
     tests_require=requirements + test_requirements,
     classifiers=[
-            # How mature is this project? Common values are
-            #   3 - Alpha
-            #   4 - Beta
-            #   5 - Production/Stable
-            'Development Status :: 5 - Production/Stable',
-            'Environment :: Console',
-            'Intended Audience :: Developers',
-            'Intended Audience :: Science/Research',
-            'License :: OSI Approved :: Apache Software License',
-            'Programming Language :: Python :: 3.6',
-            'Programming Language :: Python :: 3.7',
-            'Programming Language :: Python :: 3.8',
-            'Programming Language :: Python :: 3.9',
-            'Topic :: Software Development :: Libraries :: Python Modules',
-            "Operating System :: OS Independent",
-            "Operating System :: POSIX",
-            "Operating System :: Microsoft :: Windows",
-            "Operating System :: MacOS :: MacOS X",
-            ]
+        # How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        "Operating System :: OS Independent",
+        "Operating System :: POSIX",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS :: MacOS X",
+    ]
 )
